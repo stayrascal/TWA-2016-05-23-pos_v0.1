@@ -1,36 +1,49 @@
-/*function printInventory(inputs) {
-    var itemInfo = {};
-    var sum = 0.0;
+var fjs = require('functional.js')
 
-    inputs.forEach(function(element) {
-        if (!itemInfo[element.barcode]) {
-            element['numbers'] = 1;
-            itemInfo[element.barcode] = element;
-        } else {
-            itemInfo[element.barcode]['numbers'] += 1;
-        }
-        sum += element.price;
-    });
+var inputs = [{
+    barcode: 'ITEM000000',
+    name: '可口可乐',
+    unit: '瓶',
+    price: 3.00
 
-    sumMessage = '总计：' + sum.toFixed(2) + '(元)\n';
-    var expectText = '***<没钱赚商店>购物清单***\n' + getItemMessage(itemInfo) + '----------------------\n' + sumMessage + '**********************';
-    console.log(expectText);
-}
+}, {
+    barcode: 'ITEM000000',
+    name: '可口可乐',
+    unit: '瓶',
+    price: 3.00
+}, {
+    barcode: 'ITEM000000',
+    name: '可口可乐',
+    unit: '瓶',
+    price: 3.00
+}, {
+    barcode: 'ITEM000000',
+    name: '可口可乐',
+    unit: '瓶',
+    price: 3.00
+}, {
+    barcode: 'ITEM000000',
+    name: '可口可乐',
+    unit: '瓶',
+    price: 3.00
+}, {
+    barcode: 'ITEM000001',
+    name: '雪碧',
+    unit: '瓶',
+    price: 3.00
+}, {
+    barcode: 'ITEM000001',
+    name: '雪碧',
+    unit: '瓶',
+    price: 3.00
+}, {
+    barcode: 'ITEM000004',
+    name: '电池',
+    unit: '个',
+    price: 2.00
+}];
 
-function getMessage(data) {
-    return '名称：' + data.name + '，数量：' + data.numbers + data.unit + '，单价：' + data.price.toFixed(2) + '(元)，小计：' + (data.price * data.numbers).toFixed(2) + '(元)\n';
-}
-
-function getItemMessage(itemInfo) {
-    var itemMessage = '';
-    for (var element in itemInfo) {
-        itemMessage += getMessage(itemInfo[element]);
-    }
-    return itemMessage;
-}*/
-
-
-
+var fjs = require('functional.js')
 function printInventory(inputs) {
 
     totalPrice = getTotalPrice(inputs);
@@ -71,3 +84,5 @@ function getTotalPrice(inputs){
 function getMessage(data, numbers) {
     return '名称：' + data.name + '，数量：' + numbers + data.unit + '，单价：' + data.price.toFixed(2) + '(元)，小计：' + (data.price * numbers).toFixed(2) + '(元)\n';
 }
+
+printInventory(inputs);
