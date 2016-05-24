@@ -1,37 +1,57 @@
-/*function printInventory(inputs) {
-    var itemInfo = {};
-    var sum = 0.0;
-
-    inputs.forEach(function(element) {
-        if (!itemInfo[element.barcode]) {
-            element['numbers'] = 1;
-            itemInfo[element.barcode] = element;
-        } else {
-            itemInfo[element.barcode]['numbers'] += 1;
-        }
-        sum += element.price;
-    });
-
-    sumMessage = '总计：' + sum.toFixed(2) + '(元)\n';
-    var expectText = '***<没钱赚商店>购物清单***\n' + getItemMessage(itemInfo) + '----------------------\n' + sumMessage + '**********************';
+function printInventory(inputs) {
+    var expectText = '***<没钱赚商店>购物清单***\n' 
+                    + getItemsMessage(inputs) 
+                    + '----------------------\n' 
+                    + getTotalPriceMessage(inputs) 
+                    + '**********************';
     console.log(expectText);
 }
 
-function getMessage(data) {
-    return '名称：' + data.name + '，数量：' + data.numbers + data.unit + '，单价：' + data.price.toFixed(2) + '(元)，小计：' + (data.price * data.numbers).toFixed(2) + '(元)\n';
+function getTotalPriceMessage(inputs) {
+    return '总计：' + getTotalPrice(inputs) + '(元)\n';
 }
 
-function getItemMessage(itemInfo) {
-    var itemMessage = '';
-    for (var element in itemInfo) {
-        itemMessage += getMessage(itemInfo[element]);
-    }
-    return itemMessage;
-}*/
+function getItemMessage(data, subTotal) {
+    return '名称：' + data.name + '，数量：' + data.quantity + data.unit + '，单价：' + data.price + '(元)，小计：' + subTotal + '(元)\n';
+}
+
+function getTotalPrice(inputs) {
+    var totalPrice = 0.0;
+    inputs.forEach(function(element) {
+        totalPrice += element.price;
+    });
+    return totalPrice.toFixed(2);
+}
+
+function getItemsInfo(inputs) {
+    var itemsInfo = {};
+    inputs.forEach(function(element) {
+        if (!itemsInfo[element.barcode]) {
+            itemsInfo[element.barcode] = {};
+            itemsInfo[element.barcode].name = element.name;
+            itemsInfo[element.barcode].unit = element.unit;
+            itemsInfo[element.barcode].price = element.price.toFixed(2);
+            itemsInfo[element.barcode].quantity = 1
+        } else {
+            itemsInfo[element.barcode].quantity += 1;
+        }
+    });
+    return itemsInfo;
+}
+
+function getItemsMessage(inputs) {
+    var itemsMessage = '';
+    itemInfo = getItemsInfo(inputs);
+    Object.keys(itemInfo).forEach(function(key) {
+        var subTotal = itemInfo[key].quantity * itemInfo[key].price;
+        itemsMessage += getItemMessage(itemInfo[key], subTotal.toFixed(2));
+    });
+    return itemsMessage;
+}
 
 
 
-function printInventory(inputs) {
+/*function printInventory(inputs) {
 
     subTotal = getSubTotal(inputs);
     sumMessage = '总计：' + subTotal.toFixed(2) + '(元)\n';
@@ -70,4 +90,4 @@ function getSubTotal(inputs) {
 
 function getMessage(data, numbers) {
     return '名称：' + data.name + '，数量：' + numbers + data.unit + '，单价：' + data.price.toFixed(2) + '(元)，小计：' + (data.price * numbers).toFixed(2) + '(元)\n';
-}
+}*/
