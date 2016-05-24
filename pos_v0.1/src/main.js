@@ -33,13 +33,13 @@ function getItemMessage(itemInfo) {
 
 function printInventory(inputs) {
 
-    totalPrice = getTotalPrice(inputs);
-    sumMessage = '总计：' + totalPrice.toFixed(2) + '(元)\n';
+    subTotal = getSubTotal(inputs);
+    sumMessage = '总计：' + subTotal.toFixed(2) + '(元)\n';
     var expectText = '***<没钱赚商店>购物清单***\n' + getItemMessage(inputs) + '----------------------\n' + sumMessage + '**********************';
     console.log(expectText);
 }
 
-function getItemMessage(inputs){
+function getItemMessage(inputs) {
     itemGroups = getItemGroups(inputs);
     var message = '';
     for (var index in itemGroups) {
@@ -49,7 +49,7 @@ function getItemMessage(inputs){
     return message;
 }
 
-function getItemGroups(inputs){
+function getItemGroups(inputs) {
     var groupByBarcode = fjs.group(function(item) {
         return item.barcode;
     });
@@ -57,15 +57,15 @@ function getItemGroups(inputs){
     return itemGroups;
 }
 
-function getTotalPrice(inputs){
-     var add = function(args1, args2) {
+function getSubTotal(inputs) {
+    var add = function(args1, args2) {
         return args1 + args2;
     }
     var sum = fjs.reduce(add);
 
     var prices = fjs.pluck('price', inputs);
-    var totalPrice = sum(prices);
-    return totalPrice;
+    var subTotal = sum(prices);
+    return subTotal;
 }
 
 function getMessage(data, numbers) {
